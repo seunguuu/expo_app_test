@@ -11,12 +11,12 @@ function HomeScreen({navigation}) {
                 // onPress={()=> navigation.push('Detail')}
                 />
             <Button 
-                title="바코드 스캔"
-                onPress={()=> navigation.navigate('Barcodescan')}
+                title="QR코드 스캔"
+                onPress={()=> navigation.navigate('QRcodescan')}
                 />
             <Button 
-                title="바코드 생성"
-                onPress={()=> navigation.navigate('Barcodemake')}
+                title="QR코드 생성"
+                onPress={()=> navigation.navigate('QRcodemake')}
                 />
         </View>
     );
