@@ -7,8 +7,6 @@ function HomeScreen({navigation}) {
             <Button 
                 title="Detail 열기" 
                 onPress={()=> navigation.navigate('Detail')}
-                // navigate 함수가 아닌 push를 이용하여 이동 가능
-                // onPress={()=> navigation.push('Detail')}
                 />
             <Button 
                 title="QR코드 스캔"
@@ -17,6 +15,10 @@ function HomeScreen({navigation}) {
             <Button 
                 title="QR코드 생성"
                 onPress={()=> navigation.navigate('QRcodemake')}
+                />
+            <Button 
+                title="생체 인증"
+                onPress={()=> navigation.navigate('BioScan')}
                 />
         </View>
     );

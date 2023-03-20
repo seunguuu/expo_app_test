@@ -5,10 +5,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 export default function QRcodeScan() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-
-  <View>
-    <Text>BarCodeScanner</Text>
-  </View>
+  
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
