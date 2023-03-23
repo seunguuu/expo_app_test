@@ -1,23 +1,35 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
 
 export default function BioScreen() {
-  const [biometrics, setBiometrics] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const compatible = await LocalAuthentication.hasHardwareAsync();
-      setBiometrics(compatible);
-    })();
-  });
+  const handleAuth = async () => {
+    try {
+      const result = await LocalAuthentication.authenticateAsync();
+      if (result.success) {
+        setAuthenticated(true);
+      } else {
+        setAuthenticated(false);
+      }
+    } catch (error) {
+      console.log('Authentication error:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>
-        {biometrics
-          ? 'Your device is compatible with Biometrics'
-          : 'Face or Fingerprint scanner is available on this device'}
-      </Text>
+      {authenticated ? (
+        <Text style={styles.text}>Authenticated</Text>
+      ) : (
+        <>
+          <TouchableOpacity onPress={handleAuth} style={styles.button}>
+            <Text style={styles.buttonText}>Authenticate</Text>
+          </TouchableOpacity>
+          <Text style={styles.text}>Touch the sensor to authenticate</Text>
+        </>
+      )}
     </View>
   );
 }
@@ -25,8 +37,21 @@ export default function BioScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    marginVertical: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  text: {
+    fontSize: 16,
   },
 });
