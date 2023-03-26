@@ -6,16 +6,26 @@ export default function BioScreen() {
   const [authenticated, setAuthenticated] = useState(false);
 
   const handleAuth = async () => {
-    try {
-      const result = await LocalAuthentication.authenticateAsync();
-      if (result.success) {
-        setAuthenticated(true);
+    const isSupported = await LocalAuthentication.hasHardwareAsync();
+    if (isSupported) {
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (isEnrolled) {
+        const result = await LocalAuthentication.authenticateAsync({
+          promptMessage: '로그인을 위해 Face ID를 사용합니다.'
+        });
+        if (result.success) {
+          setAuthenticated(true);
+          console.log('Face ID 인증 성공!');
+        } else {
+          setAuthenticated(false);
+          console.log('Face ID 인증 실패!');
+        }
       } else {
-        setAuthenticated(false);
+        console.log('Face ID가 등록되어 있지 않습니다.');
       }
-    } catch (error) {
-      console.log('Authentication error:', error);
-    }
+    } else {
+    console.log('Face ID를 지원하지 않는 기기입니다.');
+}
   };
 
   return (
