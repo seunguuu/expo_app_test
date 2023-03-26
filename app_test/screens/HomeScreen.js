@@ -6,8 +6,12 @@ function HomeScreen({navigation}) {
     const [authenticated, setAuthenticated] = useState(false);
 
     const handleAuth = async () => {
+        
         try {
-        const result = await LocalAuthentication.authenticateAsync();
+        const result = await LocalAuthentication.authenticateAsync({
+            promptMessage: 'Authenticate',
+            fallbackLabel: 'Enter Password',
+          });
         if (result.success) {
             setAuthenticated(true);
         } else {
@@ -41,6 +45,10 @@ function HomeScreen({navigation}) {
                     </Button>
                 </>
             )}
+            <Button 
+                title="생체 인증 버튼 1"
+                onPress={()=> navigation.navigate('BioScan')}
+                />
         </View>
     );
 }
